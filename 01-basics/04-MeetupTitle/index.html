@@ -8,7 +8,7 @@
     <div id="app">
       <div>
         <label v-for="item in 5">
-          <input v-model="checked" :checked="checked === item" type="radio" name="meetupId" :value="item" />
+          <input v-model="checked" type="radio" name="meetupId" :value="item" />
           {{ item }}
         </label>
         <hr />
