@@ -19,7 +19,7 @@
         <ul>
           <li
             v-for="email in filteredEmails"
-            :class="email.marked ? 'marked' : ''"
+            :class="{ marked: email.marked }"
           >
             {{ email.email }}
           </li>

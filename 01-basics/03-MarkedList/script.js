@@ -35,7 +35,7 @@ const App = defineComponent({
   data() {
     return {
       search: '',
-      emails: [...emails],
+      emails: [...emails]
     };
   },
   computed: {
