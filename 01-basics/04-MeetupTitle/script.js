@@ -4,17 +4,17 @@ import { createApp, defineComponent } from '../03-MarkedList/vendor/vue.esm-brow
 
 const API_URL = 'https://course-vue.javascript.ru/api';
 
-// function fetchMeetupById(meetupId) {
-//   return fetch(`${API_URL}/meetups/${meetupId}`).then((response) => {
-//     if (response.ok) {
-//       return response.json();
-//     } else {
-//       return response.json().then((error) => {
-//         throw error;
-//       });
-//     }
-//   });
-// }
+function fetchMeetupById(meetupId) {
+  return fetch(`${API_URL}/meetups/${meetupId}`).then((response) => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      return response.json().then((error) => {
+        throw error;
+      });
+    }
+  });
+}
 
 // Требуется создать Vue приложение
 const App = defineComponent({
@@ -22,36 +22,17 @@ const App = defineComponent({
   data() {
     return {
       checked: 1,
-      meetup: {},
-      loading: false,
+      meetup: {}
     };
   },
-  computed: {},
   watch: {
     checked(id) {
-      this.fetchMeetupById(id);
+      this.meetup = fetchMeetupById(id).then();
     },
   },
   mounted() {
-    this.fetchMeetupById(this.checked);
-  },
-  methods: {
-    fetchMeetupById(meetupId) {
-      this.loading = true;
-      fetch(`${API_URL}/meetups/${meetupId}`).then((response) => {
-        if (response.ok) {
-          response.json().then((item) => {
-            (this.meetup = item);
-          });
-          this.loading = false;
-        } else {
-          return response.json().then((error) => {
-            throw error;
-          });
-        }
-      });
-    },
-  },
+    this.meetup = fetchMeetupById(this.checked).then();
+  }
 });
 
 const app = createApp(App);
