@@ -27,11 +27,15 @@ const App = defineComponent({
   },
   watch: {
     checked(id) {
-      this.meetup = fetchMeetupById(id).then();
+      fetchMeetupById(id).then((meetups) => {
+        this.meetup = meetups;
+      });
     },
   },
   mounted() {
-    this.meetup = fetchMeetupById(this.checked).then();
+    fetchMeetupById(this.checked).then((meetups) => {
+      this.meetup = meetups;
+    });
   }
 });
 
