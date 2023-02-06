@@ -20,7 +20,7 @@ export default defineComponent({
   data(){
     return {
       meetup: {
-        result: {},
+        result: null,
         error: false
       },
     }

@@ -7,6 +7,15 @@ export default defineComponent({
     place: {type: String, required: true},
     date: {type: Number, required: true},
   },
+  computed: {
+    formatedDate(){
+      return new Date(this.date).toLocaleDateString(navigator.language, {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      })
+    }
+  },
 
   template: `
     <ul class="meetup-info">
@@ -20,13 +29,8 @@ export default defineComponent({
       </li>
       <li>
         <img class="icon meetup-info__icon" alt="icon" src="/assets/icons/icon-cal-lg.svg" />
-        <time :datetime="date">
-          {{ new Date(date).toLocaleDateString('ru-RU', {
-            year: "numeric",
-            month: "long",
-            day: "numeric"
-            })
-          }}
+        <time :datetime="date.toISOString().slice(0, 10)">
+          {{ formatedDate }}
         </time>
       </li>
     </ul>`,

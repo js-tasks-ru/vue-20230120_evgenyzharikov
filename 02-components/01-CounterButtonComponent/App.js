@@ -1,5 +1,5 @@
 import { defineComponent } from './vendor/vue.esm-browser.js';
-import CounterButton from './Components/CounterButton.js';
+import CounterButton from './CounterButton.js';
 
 export default defineComponent({
   name: 'App',
