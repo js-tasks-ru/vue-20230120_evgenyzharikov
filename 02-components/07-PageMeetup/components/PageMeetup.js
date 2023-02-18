@@ -8,57 +8,50 @@ export default defineComponent({
   name: 'PageMeetup',
   props: {
     meetupId: {
+      required: true,
       type: Number,
-      required: true
-    }
+    },
   },
   components: {
     MeetupView,
     UiAlert,
     UiContainer,
   },
-  data(){
+
+  data: () => {
     return {
-      meetup: {
-        result: null,
-        error: false
-      },
+      meetup: null,
+      error: null,
+      loading: true,
     }
   },
   watch: {
-    meetupId(id){
-      this.meetup.result = {};
-      this.meetup.error = false;
-      this.fetchMeetupResult(id);
-    }
-  },
-  mounted() {
-    this.fetchMeetupResult(this.meetupId);
-  },
-  methods: {
-    fetchMeetupResult(id){
-      fetchMeetupById(id).then(
-        result => {
-          this.meetup.result = result;
-        },
-        error => {
-          this.meetup.error = true;
-        })
+    meetupId: {
+      handler: function() {
+        this.loading = true;
+        this.meetup = null;
+        this.error = null;
+
+        fetchMeetupById(this.meetupId).then((result) => {
+          this.meetup = result;
+          this.loading = false;
+        }).catch((error) => {
+          this.error = error.message;
+          this.loading = false;
+        });
+      },
+      immediate: true,
     }
   },
 
   template: `
     <div class="page-meetup">
-    <!-- meetup view -->
-    <meetup-view v-if="Object.keys(meetup.result).length > 0" :meetup="meetup.result"></meetup-view>
-
-    <UiContainer v-else-if="Object.keys(meetup.result).length === 0 && !meetup.error">
-      <UiAlert>Загрузка...</UiAlert>
-    </UiContainer>
-
-    <UiContainer v-else-if="meetup.error" >
-      <UiAlert>error</UiAlert>
-    </UiContainer>
-    </div>
-    `,
+      <MeetupView v-if="meetup" :meetup="meetup" />
+        <UiContainer v-if="loading">
+          <UiAlert>Загрузка...</UiAlert>
+        </UiContainer>
+      <UiContainer v-if="error">
+        <UiAlert>{{ error }}</UiAlert>
+      </UiContainer>
+    </div>`,
 });
