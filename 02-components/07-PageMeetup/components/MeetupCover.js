@@ -10,7 +10,7 @@ export default defineComponent({
   },
 
   template: `
-    <div class="meetup-cover" :style="bg">
+    <div class="meetup-cover" :style="this.bg">
         <!-- Ссылка выше - пример верстки при наличии изображения, а не изображение по умолчанию. -->
         <!-- Изображение по умолчанию уже есть в стилях. Для его вывода достаточно не добавлять никаких стилей. -->
         <h1 class="meetup-cover__title">{{ title }}</h1>
