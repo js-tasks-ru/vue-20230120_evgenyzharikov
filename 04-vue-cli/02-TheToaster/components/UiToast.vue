@@ -1,7 +1,7 @@
 <template>
   <div class="toast"
        :class="'toast_' + kind"
-       @click="$emit('remove', id)"
+       @click="$emit('remove')"
   >
     <ui-icon :icon="$options.icons[kind]" />&nbsp;
     <span><slot /></span>
